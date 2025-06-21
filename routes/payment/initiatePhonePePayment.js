@@ -13,11 +13,11 @@ const CALLBACK_URL = process.env.CALLBACK_URL;
 
 router.post('/', async(req, res) => {
     // You can access request body via req.body if needed
-      const { userId, amount } = req.body;
+      const { amount } = req.body;
       console.log(req.body);
-
-  // const user = await User.findOne({userId});
-  // if (!user) return res.status(404).json({ message: 'User not found' });
+      const userId = req.user.id;
+  const user = await User.findOne({userId});
+  if (!user) return res.status(404).json({ message: 'User not found' });
 
   const transactionId = `TXN_${Date.now()}`;
   const payload = {
