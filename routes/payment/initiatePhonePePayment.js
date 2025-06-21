@@ -14,8 +14,8 @@ router.post('/', async(req, res) => {
       const { userId, amount } = req.body;
       console.log(req.body);
 
-  const user = await User.findOne({userId});
-  if (!user) return res.status(404).json({ message: 'User not found' });
+  // const user = await User.findOne({userId});
+  // if (!user) return res.status(404).json({ message: 'User not found' });
 
   const transactionId = `TXN_${Date.now()}`;
   const payload = {

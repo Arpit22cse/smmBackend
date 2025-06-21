@@ -14,7 +14,7 @@ router.post('/', async(req, res) => {
   }
 
   // Dummy example: Extract amount from DB or store elsewhere per txn
-  const userId = req.body.merchantUserId;
+  const userId = req.user.id;
   const amount = req.body.amount / 100;
 
   const user = await User.findOne({userId});
