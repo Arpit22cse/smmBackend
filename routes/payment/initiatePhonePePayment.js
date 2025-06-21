@@ -39,7 +39,7 @@ router.post('/', async(req, res) => {
 
   try {
     const response = await axios.post(
-      'https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay',
+      'https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/pay',
       { request: payloadBase64 },
       { headers: { 'Content-Type': 'application/json', 'X-VERIFY': checksum, accept: 'application/json' } }
     );
