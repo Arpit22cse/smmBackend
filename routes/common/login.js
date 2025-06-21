@@ -13,7 +13,6 @@ const COOKIE_NAME = 'auth_token';
 
 router.post('/', async (req, res) => {
     const { userId, password } = req.body;
-    console.log(req.body);
     
     if (!userId || !password) {
         return res.status(400).json({ message: 'User ID and password required.' });
@@ -36,7 +35,7 @@ router.post('/', async (req, res) => {
 
         res.cookie(COOKIE_NAME, token, {
             httpOnly: true,
-            secure: false, // Not using HTTPS on localhost
+            secure: true, // Not using HTTPS on localhost
             sameSite: 'none',// Allow cross-site requests from your React frontend
             maxAge: 60 * 60 * 1000 // 1 hour
         });
