@@ -23,7 +23,7 @@ router.post('/', async(req, res) => {
     );
 
     const status = response.data.data.transactionStatus;
-    res.json({ status });
+    res.status(200).json({ status });
 
   } catch (err) {
     console.error(err.response?.data || err.message);

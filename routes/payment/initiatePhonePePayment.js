@@ -39,13 +39,13 @@ router.post('/', async(req, res) => {
 
   try {
     const response = await axios.post(
-      'https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/pay',
+      'https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay',
       { request: payloadBase64 },
       { headers: { 'Content-Type': 'application/json', 'X-VERIFY': checksum, accept: 'application/json' } }
     );
 
     const redirectUrl = response.data.data.instrumentResponse.redirectInfo.url;
-    res.json({ paymentUrl: redirectUrl, transactionId });
+    res.status(200).json({ paymentUrl: redirectUrl, transactionId });
 
   } catch (err) {
     console.error(err.response?.data || err.message);
