@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../../models/User');
-const crypto = require('crypto')
+const crypto = require('crypto');
+const axios = require('axios');
 require('dotenv').config();
 
 const router = express.Router();
