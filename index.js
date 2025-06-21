@@ -8,7 +8,7 @@ const validate = require('./middelwares/validate')
 const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://16dd-103-156-168-9.ngrok-free.app'
+  'https://smm-frontend-omega.vercel.app'
 ]
 
 app.use(cors({
