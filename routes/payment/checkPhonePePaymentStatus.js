@@ -10,7 +10,8 @@ const CALLBACK_URL = process.env.CALLBACK_URL;
 
 // Example route: GET /check-status/:id
 router.post('/', async(req, res) => {
-    const { transactionId } = req.params;
+    const { transactionId } = req.body;
+    console.log(req.body);
 
   const stringToHash = `/pg/v1/status/${MERCHANT_ID}/${transactionId}` + SALT_KEY;
   const checksum = crypto.createHash('sha256').update(stringToHash).digest('hex') + '###' + SALT_INDEX;
