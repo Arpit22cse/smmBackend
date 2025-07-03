@@ -1,32 +1,32 @@
 const express = require('express');
+require('dotenv').config();
+const router = express.Router();
 const axios = require('axios');
 
-require('dotenv').config();
-
-const apiUrl = process.env.API_URL;
 const apiKey = process.env.API_KEY;
-
-const router = express.Router();
+const apiUrl = process.env.API_URL;
 
 router.post('/', async (req, res) => {
+    const apiKey = process.env.API_KEY;
+    const refill = req.payload.orderId;
+    
+
+    if (!apiKey) {
+        return res.status(500).json({ error: 'API key not configured' });
+    }
+
+    // Example: Replace with actual API endpoint
     try {
-        const { orderId } = req.payload;
-        
-        if (!orderId) {
-            return res.status(400).json({ error: 'OrderId is required' });
-        }
-
-        // const response = await axios.post(apiUrl, null, {
-        //     params: {
-        //         key: apiKey,
-        //         action: 'refill',
-        //         order: OrderId
-        //     }
-        // });
-
-        res.status(200).json({refill:"356"});
+        const response = await axios.get(`${apiUrl}`, {
+            params: {
+                key: apiKey,
+                action: 'refill_status',
+                refill: refill
+            }
+        });
+        res.status(200).json(response.data);
     } catch (error) {
-        res.status(500).json({ error: error.response ? error.response.data : error.message });
+        res.status(500).json({ error: 'Failed to fetch refill status' });
     }
 });
 

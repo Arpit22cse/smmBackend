@@ -17,29 +17,28 @@ router.post('/', async (req, res) => {
     }
 
     try {
-        // const response = await axios.post(apiUrl, {
-        //     key: apiKey,
-        //     action: 'status',
-        //     order
-        // });
+        const response = await axios.post(apiUrl, {
+            key: apiKey,
+            action: 'status',
+            order
+        });
 
-        // Here you would update the order's last status in your database
-        // Example: await OrderModel.updateStatus(order, response.data);
-        // const Order=await db.collection('orders').findOneAndUpdate(
-        //     { orderId: order },
-        //     { $set: { lastStatus: response.data.status } }
-        // );
+        //Here you would update the order's last status in your database
+        //Example: await OrderModel.updateStatus(order, response.data);
+        const Order = await db.collection('orders').findOneAndUpdate(
+            { orderId: order },
+            { 
+            $set: { 
+                lastStatus: response.data.status,
+                start_count: response.data.start_count
+            } 
+            },
+            { returnDocument: 'after' }
+        );
         
-        // response.data.charge = Order.quantity * Order.rate;
+        response.data.charge = Order.quantity * Order.rate;
 
-        res.status(200).json({
-    "charge": "0.27819",
-    "start_count": "3572",
-    "status": "Partial",
-    "remains": "157",
-    "currency": "USD"
-}
-);
+        res.status(200).json(response.data);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch order status', details: error.message });
     }

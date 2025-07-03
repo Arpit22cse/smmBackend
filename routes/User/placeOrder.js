@@ -8,7 +8,6 @@ const Transaction = require('../../models/Transaction');
 const apiKey=process.env.API_KEY;
 const apiUrl=process.env.API_URL;
 router.post("/", async (req, res) => {
-  console.log(req.body);
   try {
 
     const response = await axios.post(apiUrl, new URLSearchParams({
@@ -35,7 +34,8 @@ router.post("/", async (req, res) => {
     let orderId, status;
     try {
       await session.withTransaction(async () => {
-      const { serviceId, service, link, quantity, rate, totalAmount } = req.body;
+      const { serviceId, service, linkInput, quantity, rate, totalAmount } = req.body;
+      const link = linkInput;
 
       // Re-check balance inside transaction
       const freshUser = await db.collection('users').findOne({ userId: req.user.id }, { session });
@@ -62,6 +62,12 @@ router.post("/", async (req, res) => {
       const orderResponse = await axios.post(apiUrl, null, { params });
       orderId = orderResponse.data.order || null;
 
+      // If orderId is not present, throw an error
+      if (!orderId) {
+        throw new Error("Order could not be placed. because order already present with this link");
+      }
+      
+
       // Get order status
       const statusParams = {
         key: apiKey,
@@ -70,8 +76,8 @@ router.post("/", async (req, res) => {
       };
       const statusResponse = await axios.post(apiUrl, null, { params: statusParams });
       status = statusResponse.data.status || "pending";
-
-      // Save the order in the database
+      
+      
       const newOrder = new Order({
         orderId: orderId,
         lastStatus: status,
@@ -96,7 +102,7 @@ router.post("/", async (req, res) => {
       await session.endSession();
     }
 
-    res.status(200).json({ msg: "Order placed successfully", orderId:1, status:"complete" });
+    res.status(200).json({ msg: "Order placed successfully", orderId:orderId, status:status });
   } catch (error) {
     console.error(error);
     res.status(500).json({ msg: "Failed to place order", error: error.message });

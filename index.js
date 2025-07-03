@@ -102,15 +102,6 @@ app.use('/requestRefillStatus', validate, requestRefillStatus)
 const getOrderStatus = require('./routes/User/getOrderStatus');
 app.use('/getOrderStatus', validate, getOrderStatus);
 
-const initiatePhonePePayment = require('./routes/payment/initiatePhonePePayment');
-app.use('/initiatePhonePePayment', validate, initiatePhonePePayment);
-
-
-const phonePeCallback = require('./routes/payment/phonePeCallback');
-app.use('/phonePeCallback', validate, phonePeCallback);
-
-const checkPhonePePaymentStatus = require('./routes/payment/checkPhonePePaymentStatus');
-app.use('/checkPhonePePaymentStatus', validate, checkPhonePePaymentStatus);
 
 // Start server
 const PORT = 3000;
