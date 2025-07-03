@@ -1,5 +1,6 @@
 const express = require('express');
 const axios = require('axios');
+const Order = require('../../models/Order');
 
 require('dotenv').config();
 
@@ -24,6 +25,10 @@ router.post('/', async (req, res) => {
             }
         });
 
+        await Order.findOneAndUpdate(
+            { orderId },
+            { $set: { refill: response.data.refill } }
+        );
         
 
         if (response.data && response.data.error) {
