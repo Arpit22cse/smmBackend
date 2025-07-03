@@ -97,7 +97,7 @@ const requestRefill = require('./routes/User/requestRefill');
 app.use('/requestRefill', validate, requestRefill);
 
 const requestRefillStatus = require('./routes/User/requestRefillStatus');
-app.use('/requestRefillStatus', validate, requestRefillStatus)
+app.use('/requestRefillStatus', validate, requestRefillStatus);
 
 const getOrderStatus = require('./routes/User/getOrderStatus');
 app.use('/getOrderStatus', validate, getOrderStatus);
