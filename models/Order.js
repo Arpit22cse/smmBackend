@@ -33,7 +33,6 @@ const OrderSchema = new mongoose.Schema({
     },
     start_count: {
         type: String,
-        required: true
     }
 }, { timestamps: true });
 
