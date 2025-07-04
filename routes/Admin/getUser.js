@@ -10,9 +10,18 @@ router.post('/', async (req, res) => {
         // const user = await User.findById(userId);
         const user = await db.collection('users').findOne({userId});
 
-        const orders = await db.collection('orders').find({user:user._id}).toArray();
+        const orders = await db.collection('orders')
+            .find({ user: user._id })
+            .sort({ createdAt: -1 })
+            .limit(10)
+            .toArray();
 
-        const transactions = await db.collection('transactions').find({user:user._id}).toArray();
+        const transactions = await db.collection('transactions')
+            .find({ user: user._id })
+            .sort({ date: -1 })
+            .limit(10)
+            .toArray();
+
 
         const services = await db.collection('services').find({
             serviceId: { $in: user.services || [] }

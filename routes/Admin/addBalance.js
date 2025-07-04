@@ -11,8 +11,9 @@ router.put("/",async(req,res)=>{
     if(req.user.role!=='admin'){
         res.status(404).json({msg:"unauthorized"});
     }
+    let curr;
     try {
-        const curr = await db.collection('users').findOne({ userId });
+        curr = await db.collection('users').findOne({ userId });
         if (!curr) {
             return res.status(404).json({ msg: "User not found" });
         }
@@ -40,7 +41,7 @@ router.put("/",async(req,res)=>{
             throw err;
         }
         session.endSession();
-        res.status(200).json({ user });
+        res.status(200).json({ user:curr });
     } catch (error) {
         console.log(error);
         res.status(500).json({ msg: "Internal server error", error: error.message });
