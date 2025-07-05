@@ -10,8 +10,8 @@ router.get('/', async (req, res) => {
         const userId = req.user.id; // e.g., 'user123' from your UserSchema.userId
 
         // --- Pagination Parameters ---
-        const page = parseInt(req.params.page) || 1;
-        const limit = parseInt(req.params.limit) || 10;
+        const page = parseInt(req.query['page[page]']) || 1;
+        const limit = parseInt(req.query['page[limit]']) || 10;
         const skip = (page - 1) * limit;
 
         // 1. Find the user document to get their MongoDB _id
