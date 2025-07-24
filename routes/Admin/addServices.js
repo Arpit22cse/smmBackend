@@ -31,16 +31,14 @@ router.post('/', (req, res) => {
                             return res.status(500).json({ message: 'Failed to update user.' });
                         }
                         user.services.push(serviceId);
-                        res.json({ message: 'Service added successfully.', user });
+                        res.status(200).json({ message: 'Service added successfully.', user });
                     }
                 );
             } else {
-                res.json({ message: 'Service already exists for user.', user });
+                res.status(200).json({ message: 'Service already exists for user.', user });
             }
         }
     });
-
-    res.json({ message: 'Service added successfully.', user });
 });
 
 module.exports = router;
