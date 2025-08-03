@@ -17,7 +17,7 @@ class AuthController {
         }
 
         try {
-            const user = await User.findOne({ userid });
+            const user = await User.findOne({ userId:userid });
 
             if (!user) {
                 return res.status(401).json({ message: 'Invalid credentials.' });
