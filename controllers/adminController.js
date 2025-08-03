@@ -24,8 +24,8 @@ class AdminController{
             }
             try {
                 const hashedPassword = await bcrypt.hash(password, 10);
-                const newUser = new user({
-                    userId,
+                const newUser = new User({
+                    userId:userId.toLowerCase(),
                     password: hashedPassword,
                     role,
                     services

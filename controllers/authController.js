@@ -10,13 +10,14 @@ class AuthController {
         const COOKIE_NAME = 'auth_token';
 
         const { userId, password } = req.body;
+        const userid = userId.toLowerCase();
 
         if (!userId || !password) {
             return res.status(400).json({ message: 'User ID and password required.' });
         }
 
         try {
-            const user = await User.findOne({ userId });
+            const user = await User.findOne({ userid });
 
             if (!user) {
                 return res.status(401).json({ message: 'Invalid credentials.' });
